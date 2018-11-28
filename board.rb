@@ -22,14 +22,15 @@ class Board
 
   def move_piece(start_pos, end_pos)
     raise "no piece at starting position" if self[start_pos].empty?
-    raise "invalid end position" unless valid_pos?(end_pos)
     raise "invalid move" unless self[start_pos].moves.include?(end_pos)
+    raise "invalid end position" unless valid_pos?(end_pos)
     self[start_pos], self[end_pos] = self[end_pos], self[start_pos]
     self[end_pos].pos, self[start_pos].pos = end_pos, start_pos
   end
 
   def valid_pos?(pos)
-    pos[0].between?(0, 7) && pos[1].between?(0, 7) && self[pos].empty?
+    return true if pos[0].between?(0, 7) && pos[1].between?(0, 7) && self[pos].empty?
+
   end
 
   def add_piece(piece, pos)
@@ -37,18 +38,45 @@ class Board
   end
 
   def checkmate?(color)
+    own_pieces = self.grid.flatten.select {|piece| piece.color == color}
+    own_pieces.all?{|piece| piece.valid_moves.empty?} && in_check?(color)
   end
 
   def in_check?(color)
+    king_pos = find_king(color)
+    opposing_pieces = pieces.select {|piece| piece.color != color}
+    opposing_pieces.any?{|piece| piece.moves.include?(king_pos)}
   end
 
   def find_king(color)
+    self.grid.each_with_index do |row, i|
+      row.each_with_index do |piece, j|
+        return [i, j] if piece.class == King && piece.color == color
+      end
+    end
   end
 
   def pieces
+    all_pieces = []
+    self.grid.each_with_index do |row, i|
+      row.each_with_index do |piece, j|
+        all_pieces << piece unless piece.empty?
+      end
+    end
+    all_pieces
   end
 
   def dup
+    duped_board = Board.new
+    duped_board.grid = Array.new(8) {Array.new(8, @null)}
+    self.grid.each_with_index do |row, i|
+      row.each_with_index do |piece, j|
+        unless piece.empty?
+          duped_board.add_piece(piece.class.new(piece.color, self, [i, j]), [i, j])
+        end
+      end
+    end
+    duped_board
   end
 
   def move_piece!(color, start_pos, end_pos)
