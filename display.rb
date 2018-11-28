@@ -1,4 +1,6 @@
 require 'colorize'
+require_relative 'pieces'
+require_relative 'piece'
 require_relative 'cursor'
 require_relative 'board'
 
@@ -43,4 +45,11 @@ class Display
       end
     end
   end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  b = Board.new
+  d = Display.new(b)
+  d.make_move
+
 end
