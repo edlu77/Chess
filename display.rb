@@ -36,7 +36,7 @@ class Display
       if self.cursor.selected
         startpos = self.cursor.cursor_pos
         p startpos
-        p self.board[startpos].moves
+        p self.board[startpos].valid_moves
         while self.cursor.selected
           # system("clear")
           render
@@ -44,6 +44,7 @@ class Display
           endpos = self.cursor.cursor_pos
         end
         self.board.move_piece(startpos, endpos)
+        p self.board.in_check?(:white)
       end
     end
   end
@@ -55,7 +56,7 @@ if __FILE__ == $PROGRAM_NAME
   b.move_piece([6,5],[5,5])
   b.move_piece([1,4],[3,4])
   b.move_piece([6,6],[4,6])
-  b.move_piece([0,3],[4,7])
+  # b.move_piece([0,3],[4,7])
   d.render
   d.make_move
 

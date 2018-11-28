@@ -22,7 +22,7 @@ class Board
 
   def move_piece(start_pos, end_pos)
     raise "no piece at starting position" if self[start_pos].empty?
-    raise "invalid move" unless self[start_pos].moves.include?(end_pos)
+    raise "invalid move" unless self[start_pos].valid_moves.include?(end_pos)
     raise "invalid end position" unless valid_pos?(end_pos) || self[start_pos].color != self[end_pos].color
     self[start_pos], self[end_pos] = self[end_pos], self[start_pos]
     self[end_pos].pos, self[start_pos].pos = end_pos, start_pos
@@ -42,16 +42,15 @@ class Board
   end
 
   def checkmate?(color)
-    # debugger
-    # own_pieces = self.grid.flatten.select {|piece| piece.color == color}
-    # debugger
-    # own_pieces.all?{|piece| piece.valid_moves.empty?} && in_check?(color)
-    # debugger
+    own_pieces = pieces.select {|piece| piece.color == color}
+    own_pieces.all?{|piece| piece.valid_moves.empty?} && in_check?(color)
   end
 
   def in_check?(color)
     king_pos = find_king(color)
-    opposing_pieces = pieces.select {|piece| piece.color != color}
+    opposing_pieces = pieces.select do |piece|
+      color == :white ? piece.color == :black : piece.color == :white
+    end
     opposing_pieces.any?{|piece| piece.moves.include?(king_pos)}
   end
 
@@ -86,7 +85,10 @@ class Board
     duped_board
   end
 
-  def move_piece!(color, start_pos, end_pos)
+  def move_piece!(start_pos, end_pos)
+    self[start_pos], self[end_pos] = self[end_pos], self[start_pos]
+    self[end_pos].pos, self[start_pos].pos = end_pos, start_pos
+    capture_piece(start_pos)
   end
 
   private
