@@ -12,7 +12,9 @@ module Stepable
     all_moves = []
     move_diffs.each do |dir|
       newpos = [self.pos[0] + dir[0], self.pos[1] + dir[1]]
-      all_moves << newpos if self.board.valid_pos?(newpos)
+      if opposing_piece_at_pos?(newpos) || self.board.valid_pos?(newpos)
+        all_moves << newpos
+      end
     end
     all_moves
   end

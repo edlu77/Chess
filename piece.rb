@@ -25,7 +25,7 @@ class Piece
   end
 
   def valid_moves
-    moves.reject{|move| move_into_check?(move)}
+    # moves.reject{|move| move_into_check?(move)}
   end
 
   def pos=(val)
@@ -41,6 +41,10 @@ class Piece
     board_dup = self.board.dup
     board_dup.move_piece(self.pos, end_pos)
     board_dup.in_check?(self.color)
+  end
+
+  def opposing_piece_at_pos?(pos)
+    self.color == :white ? self.board[pos].color == :black : self.board[pos].color == :white
   end
 
 end

@@ -30,13 +30,15 @@ class Display
 
   def make_move
     while true
-      system("clear")
+      # system("clear")
       render
       self.cursor.get_input
       if self.cursor.selected
         startpos = self.cursor.cursor_pos
+        p startpos
+        p self.board[startpos].moves
         while self.cursor.selected
-          system("clear")
+          # system("clear")
           render
           self.cursor.get_input
           endpos = self.cursor.cursor_pos
@@ -50,6 +52,11 @@ end
 if __FILE__ == $PROGRAM_NAME
   b = Board.new
   d = Display.new(b)
+  b.move_piece([6,5],[5,5])
+  b.move_piece([1,4],[3,4])
+  b.move_piece([6,6],[4,6])
+  b.move_piece([0,3],[4,7])
+  d.render
   d.make_move
 
 end

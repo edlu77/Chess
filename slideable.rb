@@ -37,6 +37,9 @@ module Slideable
       x += dx
       y += dy
     end
+    if x.between?(0, 7) && y.between?(0, 7) && opposing_piece_at_pos?([x, y])
+      unblocked_moves << [x, y]
+    end
     unblocked_moves
   end
 

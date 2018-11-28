@@ -23,14 +23,18 @@ class Board
   def move_piece(start_pos, end_pos)
     raise "no piece at starting position" if self[start_pos].empty?
     raise "invalid move" unless self[start_pos].moves.include?(end_pos)
-    raise "invalid end position" unless valid_pos?(end_pos)
+    raise "invalid end position" unless valid_pos?(end_pos) || self[start_pos].color != self[end_pos].color
     self[start_pos], self[end_pos] = self[end_pos], self[start_pos]
     self[end_pos].pos, self[start_pos].pos = end_pos, start_pos
+    capture_piece(start_pos)
+  end
+
+  def capture_piece(pos)
+    self[pos] = @null
   end
 
   def valid_pos?(pos)
     return true if pos[0].between?(0, 7) && pos[1].between?(0, 7) && self[pos].empty?
-
   end
 
   def add_piece(piece, pos)
@@ -38,8 +42,11 @@ class Board
   end
 
   def checkmate?(color)
-    own_pieces = self.grid.flatten.select {|piece| piece.color == color}
-    own_pieces.all?{|piece| piece.valid_moves.empty?} && in_check?(color)
+    # debugger
+    # own_pieces = self.grid.flatten.select {|piece| piece.color == color}
+    # debugger
+    # own_pieces.all?{|piece| piece.valid_moves.empty?} && in_check?(color)
+    # debugger
   end
 
   def in_check?(color)
