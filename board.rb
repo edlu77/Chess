@@ -42,11 +42,9 @@ class Board
   end
 
   def checkmate?(color)
-
     own_pieces = pieces.select {|piece| piece.color == color}
-
     own_pieces.all?{|piece| piece.valid_moves.empty?} && in_check?(color)
-    
+
   end
 
   def in_check?(color)

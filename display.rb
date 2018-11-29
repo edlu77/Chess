@@ -27,36 +27,4 @@ class Display
       puts row
     end
   end
-
-#   def make_move
-#     while true
-#       # system("clear")
-#       render
-#       self.cursor.get_input
-#       if self.cursor.selected
-#         startpos = self.cursor.cursor_pos
-#         p startpos
-#         p self.board[startpos].valid_moves
-#         while self.cursor.selected
-#           # system("clear")
-#           render
-#           self.cursor.get_input
-#           endpos = self.cursor.cursor_pos
-#         end
-#         self.board.move_piece(startpos, endpos)
-#         p self.board.in_check?(:white)
-#       end
-#     end
-#   end
 end
-
-# if __FILE__ == $PROGRAM_NAME
-#   b = Board.new
-#   d = Display.new(b)
-#   b.move_piece([6,5],[5,5])
-#   b.move_piece([1,4],[3,4])
-#   b.move_piece([6,6],[4,6])
-#   # b.move_piece([0,3],[4,7])
-#   d.render
-#   d.make_move
-# end
