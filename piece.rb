@@ -1,8 +1,10 @@
 require_relative 'pieces'
+require_relative 'display'
 require 'byebug'
 
 class Piece
-  attr_reader :color, :board, :pos
+  attr_reader :color, :pos
+  attr_accessor :board
 
   WSYMBOLS = {:queen => "♕ ", :rook => "♖ ", :pawn => "♙ ", :bishop => "♗ ",
   :knight =>"♘ " , :king => "♔ ", :null => "  "}
@@ -35,13 +37,13 @@ class Piece
   def symbol
   end
 
-  private
-
   def move_into_check?(end_pos)
     board_dup = self.board.dup
     board_dup.move_piece!(self.pos, end_pos)
     board_dup.in_check?(self.color)
   end
+
+  private
 
   def opposing_piece_at_pos?(pos)
     return false unless pos[0].between?(0, 7) && pos[1].between?(0, 7)

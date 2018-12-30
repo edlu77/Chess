@@ -13,7 +13,10 @@ class Pawn < Piece
   def moves
     all_moves = []
     forward_steps.each do |dir|
-      all_moves << [self.pos[0] + dir[0], self.pos[1] + dir[1]]
+      newpos = [self.pos[0] + dir[0], self.pos[1] + dir[1]]
+      unless opposing_piece_at_pos?(newpos)
+        all_moves << newpos
+      end
     end
     side_attacks.each do |dir|
       newpos = [self.pos[0] + dir[0], self.pos[1] + dir[1]]

@@ -8,6 +8,7 @@ class Board
     @null = Nullpiece.instance
     @grid = Array.new(8) {Array.new(8, @null)}
     populate_board
+    # populate_test
   end
 
   def [](pos)
@@ -20,8 +21,13 @@ class Board
     self.grid[x][y] = val
   end
 
+  def empty?(pos)
+  self[pos].empty?
+end
+
   def move_piece(start_pos, end_pos)
     raise "no piece at starting position" if self[start_pos].empty?
+    raise "can't move into check" if self[start_pos].move_into_check?(end_pos)
     raise "invalid move" unless self[start_pos].valid_moves.include?(end_pos)
     raise "invalid end position" unless valid_pos?(end_pos) || self[start_pos].color != self[end_pos].color
     self[start_pos], self[end_pos] = self[end_pos], self[start_pos]
@@ -45,15 +51,23 @@ class Board
     own_pieces = pieces.select {|piece| piece.color == color}
     own_pieces.all?{|piece| piece.valid_moves.empty?} && in_check?(color)
 
+
   end
 
+  # def in_check?(color)
+  #   king_pos = find_king(color)
+  #   opposing_pieces = pieces.select do |piece|
+  #     color == :white ? piece.color == :black : piece.color == :white
+  #   end
+  #   opposing_pieces.any?{|piece| piece.moves.include?(king_pos)}
+  # end
+
   def in_check?(color)
-    king_pos = find_king(color)
-    opposing_pieces = pieces.select do |piece|
-      color == :white ? piece.color == :black : piece.color == :white
-    end
-    opposing_pieces.any?{|piece| piece.moves.include?(king_pos)}
+  king_pos = find_king(color)
+  pieces.any? do |p|
+    p.color != color && p.moves.include?(king_pos)
   end
+end
 
   def find_king(color)
     self.grid.each_with_index do |row, i|
@@ -67,7 +81,7 @@ class Board
     all_pieces = []
     self.grid.each_with_index do |row, i|
       row.each_with_index do |piece, j|
-        all_pieces << piece unless piece.empty?
+        all_pieces << piece unless empty?([i,j])
       end
     end
     all_pieces
@@ -79,7 +93,7 @@ class Board
     self.grid.each_with_index do |row, i|
       row.each_with_index do |piece, j|
         unless piece.empty?
-          duped_board.add_piece(piece.class.new(piece.color, self, [i, j]), [i, j])
+          duped_board.add_piece(piece.class.new(piece.color, duped_board, [i, j]), [i, j])
         end
       end
     end
@@ -151,6 +165,11 @@ class Board
     populate_knights
     populate_kings
     populate_pawns
+  end
+
+  def populate_test
+    add_piece(Pawn.new(:black, self, [3, 3]), [3, 3])
+    add_piece(King.new(:white, self, [5, 3]), [5, 3])
   end
 
 end

@@ -17,7 +17,9 @@ class Game
 
   def play
     until self.board.checkmate?(:white) || self.board.checkmate?(:black)
-      puts self.current_player.color
+      system("clear")
+      puts "check" if self.board.in_check?(self.current_player.color)
+      puts "#{self.current_player.color}'s move"
       self.current_player.make_move(self.board)
       swap_turn!
     end
@@ -41,6 +43,10 @@ if __FILE__ == $PROGRAM_NAME
   # g.board.move_piece([6,5],[5,5])
   # g.board.move_piece([1,4],[3,4])
   # g.board.move_piece([6,6],[4,6])
-  # g.board.move_piece([0,3],[4,7])
+  # g.board.move_piece([3,4],[4,4])
+  # g.board.move_piece([7,4],[6,5])
+  # g.board.move_piece([1,3],[2,3])
   g.play
 end
+
+# g.board.move_piece([0,3],[4,7])

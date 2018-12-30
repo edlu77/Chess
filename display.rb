@@ -13,8 +13,9 @@ class Display
   end
 
   def render
+    puts "  0 1 2 3 4 5 6 7"
     (0..7).each do |i|
-      row = ""
+      row = "#{i} "
       (0..7).each do |j|
         if self.cursor.cursor_pos == [i, j]
           row += board[[i,j]].to_s.colorize(
