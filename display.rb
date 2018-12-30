@@ -13,16 +13,16 @@ class Display
   end
 
   def render
-    puts "  0 1 2 3 4 5 6 7"
-    (0..7).each do |i|
-      row = "#{i} "
+    puts "  A B C D E F G H"
+    [8,7,6,5,4,3,2,1].each_with_index do |el, idx|
+      row = "#{el} "
       (0..7).each do |j|
-        if self.cursor.cursor_pos == [i, j]
-          row += board[[i,j]].to_s.colorize(
+        if self.cursor.cursor_pos == [idx, j]
+          row += board[[idx,j]].to_s.colorize(
             :background => self.cursor.selected ? :red : :green
           )
         else
-          row += board[[i,j]].to_s
+          row += board[[idx,j]].to_s
         end
       end
       puts row

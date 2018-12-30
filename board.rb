@@ -1,5 +1,4 @@
 require_relative 'piece'
-require 'byebug'
 
 class Board
   attr_accessor :grid
@@ -8,7 +7,6 @@ class Board
     @null = Nullpiece.instance
     @grid = Array.new(8) {Array.new(8, @null)}
     populate_board
-    # populate_test
   end
 
   def [](pos)
@@ -50,24 +48,15 @@ end
   def checkmate?(color)
     own_pieces = pieces.select {|piece| piece.color == color}
     own_pieces.all?{|piece| piece.valid_moves.empty?} && in_check?(color)
-
-
   end
-
-  # def in_check?(color)
-  #   king_pos = find_king(color)
-  #   opposing_pieces = pieces.select do |piece|
-  #     color == :white ? piece.color == :black : piece.color == :white
-  #   end
-  #   opposing_pieces.any?{|piece| piece.moves.include?(king_pos)}
-  # end
 
   def in_check?(color)
-  king_pos = find_king(color)
-  pieces.any? do |p|
-    p.color != color && p.moves.include?(king_pos)
+    king_pos = find_king(color)
+    opposing_pieces = pieces.select do |piece|
+      color == :white ? piece.color == :black : piece.color == :white
+    end
+    opposing_pieces.any?{|piece| piece.moves.include?(king_pos)}
   end
-end
 
   def find_king(color)
     self.grid.each_with_index do |row, i|
@@ -166,10 +155,4 @@ end
     populate_kings
     populate_pawns
   end
-
-  def populate_test
-    add_piece(Pawn.new(:black, self, [3, 3]), [3, 3])
-    add_piece(King.new(:white, self, [5, 3]), [5, 3])
-  end
-
 end

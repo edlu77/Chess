@@ -1,6 +1,4 @@
 require_relative 'pieces'
-require_relative 'display'
-require 'byebug'
 
 class Piece
   attr_reader :color, :pos

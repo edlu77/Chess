@@ -4,16 +4,11 @@ require_relative 'player'
 class HumanPlayer < Player
 
   def make_move(_board)
-
     move_made = false
     until move_made
-
       self.display.render
       self.display.cursor.get_input
       system("clear")
-      # unless _board[self.display.cursor.cursor_pos].class == Nullpiece
-      #   p _board[self.display.cursor.cursor_pos].valid_moves
-      # end
       puts "#{self.color}'s move"
       if self.display.cursor.selected
         startpos = self.display.cursor.cursor_pos
