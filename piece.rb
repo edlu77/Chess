@@ -5,7 +5,7 @@ class Piece
   attr_accessor :board
 
   WSYMBOLS = {:queen => "♕ ", :rook => "♖ ", :pawn => "♙ ", :bishop => "♗ ",
-  :knight =>"♘ " , :king => "♔ ", :null => "  "}
+  :knight =>"♘ " , :king => "♔ ", :null => "   "}
 
   BSYMBOLS = {:queen => "♛ ", :rook => "♜ ", :pawn => "♟ ", :bishop => "♝ ",
   :knight => "♞ ", :king => "♚ ", :null => "  "}

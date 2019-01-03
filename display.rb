@@ -22,7 +22,9 @@ class Display
             :background => self.cursor.selected ? :red : :green
           )
         else
-          row += board[[idx,j]].to_s
+          row += board[[idx,j]].to_s.colorize(
+            :background => (idx+j)%2 == 0 ? :gray : :white
+          )
         end
       end
       puts row

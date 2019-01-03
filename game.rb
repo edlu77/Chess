@@ -35,6 +35,8 @@ class Game
   private
 
   def notify_players
+    system("clear")
+    self.display.render
     puts "checkmate!"
   end
 
