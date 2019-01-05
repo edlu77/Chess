@@ -76,7 +76,3 @@ def move_into_check?(end_pos)
   board_dup.in_check?(self.color)
 end
 ```
-
-# Future Directions
-* Implement AI opponent
-* Advanced moves (castling, en passant)
