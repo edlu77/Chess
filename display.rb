@@ -1,6 +1,4 @@
 require 'colorize'
-require_relative 'pieces'
-require_relative 'piece'
 require_relative 'cursor'
 require_relative 'board'
 

@@ -1,4 +1,3 @@
-require_relative 'piece'
 require_relative 'player'
 
 class HumanPlayer < Player
@@ -14,15 +13,19 @@ class HumanPlayer < Player
         startpos = self.display.cursor.cursor_pos
         raise "incorrect color" if self.color != self.display.board[startpos].color
         while self.display.cursor.selected
-          system("clear")
-          puts "#{self.color}'s move"
-          self.display.render
-          self.display.cursor.get_input
-          endpos = self.display.cursor.cursor_pos
+          endpos = get_second_pos
         end
         self.display.board.move_piece(startpos, endpos)
         move_made = true
       end
     end
+  end
+
+  def get_second_pos
+    system("clear")
+    puts "#{self.color}'s move"
+    self.display.render
+    self.display.cursor.get_input
+    self.display.cursor.cursor_pos
   end
 end

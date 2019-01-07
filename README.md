@@ -1,6 +1,6 @@
 # Chess
 
-![starting screen](chess.png)
+![starting screen](/images/chess.png)
 
 This is a simple console-based version of the classic board game chess, coded in Ruby.
 
@@ -20,13 +20,13 @@ This is a simple console-based version of the classic board game chess, coded in
 
 * Piece movement
 
-![movement](movement.gif)
+![movement](images/movement.gif)
 
 Pieces are categorized into three different types of movement: sliding, stepping, and pawns. Sliding pieces (bishops, queens, rooks) may move in a direction until they encounter another piece. Stepping pieces (kings and knights) may move in a certain way in a direction. Pawns are unique in that they may only capture diagonally, but are otherwise restricted to only forward movements (direction depending on color).
 
 * Check and checkmate
 
-![checkmate](checkmate.png)
+![checkmate](images/checkmate.png)
 
 After each move, the game will check if the board is in a state of check or checkmate. After a move is submitted, game will also check if the move will result in the current player's own color being in check.
 
